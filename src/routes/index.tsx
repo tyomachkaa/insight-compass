@@ -209,17 +209,18 @@ function NavPill({ href, label, active }: { href: string; label: string; active?
 function OrbitCard({ icon, title, body }: { icon: React.ReactNode; title: string; body: string }) {
   return (
     <motion.div
-      whileHover={{ y: -4, borderColor: "oklch(0.82 0.15 220 / 0.5)" }}
-      className="group relative rounded-3xl bg-card border border-border/60 p-8 backdrop-blur-sm transition overflow-hidden"
+      whileHover={{ y: -6 }}
+      className="group relative rounded-3xl p-8 overflow-hidden border border-primary/30 bg-gradient-to-br from-primary/10 via-card to-violet/10 shadow-pop hover:shadow-glow hover:border-primary/60 transition-all"
     >
-      <div className="absolute -top-20 -right-20 size-40 rounded-full bg-primary/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute -top-24 -right-24 size-56 rounded-full bg-primary/30 blur-3xl opacity-60 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute -bottom-24 -left-24 size-48 rounded-full bg-violet/25 blur-3xl opacity-50 group-hover:opacity-90 transition-opacity" />
       <div className="relative">
-        <div className="size-14 rounded-2xl grid place-items-center text-primary border border-primary/30 bg-primary/5 mb-6 shadow-glow">
+        <div className="size-14 rounded-2xl grid place-items-center text-primary-foreground bg-primary mb-6 shadow-glow">
           {icon}
         </div>
-        <h3 className="font-display text-2xl font-light">{title}</h3>
-        <p className="mt-3 text-muted-foreground text-sm leading-relaxed">{body}</p>
-        <div className="mt-6 flex items-center gap-2 text-xs uppercase tracking-widest text-primary opacity-70 group-hover:opacity-100 transition">
+        <h3 className="font-display text-2xl font-medium">{title}</h3>
+        <p className="mt-3 text-foreground/80 text-sm leading-relaxed">{body}</p>
+        <div className="mt-6 flex items-center gap-2 text-xs uppercase tracking-widest text-primary opacity-90 group-hover:opacity-100 transition">
           Learn more <ArrowRight className="size-3" />
         </div>
       </div>
@@ -229,35 +230,37 @@ function OrbitCard({ icon, title, body }: { icon: React.ReactNode; title: string
 
 function Step({ n, icon, title, body }: { n: string; icon: React.ReactNode; title: string; body: string }) {
   return (
-    <div className="rounded-3xl bg-card/60 border border-border/60 backdrop-blur-sm p-8">
-      <div className="flex items-center gap-4 mb-5">
-        <span className="font-display text-4xl font-light text-primary/40">{n}</span>
-        <div className="size-10 rounded-2xl grid place-items-center text-primary border border-primary/30 bg-primary/5">{icon}</div>
+    <div className="relative rounded-3xl p-8 border border-primary/25 bg-gradient-to-br from-card via-primary/5 to-violet/15 shadow-pop overflow-hidden">
+      <div className="absolute -top-16 -right-16 size-40 rounded-full bg-primary/20 blur-3xl" />
+      <div className="relative flex items-center gap-4 mb-5">
+        <span className="font-display text-5xl font-bold bg-gradient-to-br from-primary to-violet bg-clip-text text-transparent">{n}</span>
+        <div className="size-10 rounded-2xl grid place-items-center text-primary-foreground bg-primary shadow-glow">{icon}</div>
       </div>
-      <h3 className="font-display text-xl font-light">{title}</h3>
-      <p className="mt-2 text-muted-foreground text-sm">{body}</p>
+      <h3 className="relative font-display text-xl font-medium">{title}</h3>
+      <p className="relative mt-2 text-foreground/75 text-sm">{body}</p>
     </div>
   );
 }
 
 function PriceCard({ tier, price, period, features, cta, highlighted }: { tier: string; price: string; period: string; features: string[]; cta: string; highlighted?: boolean }) {
   return (
-    <div className={`relative rounded-3xl p-8 border backdrop-blur-sm ${highlighted ? "bg-primary/10 border-primary/50 shadow-glow" : "bg-card border-border/60"}`}>
+    <div className={`relative rounded-3xl p-8 border overflow-hidden ${highlighted ? "bg-gradient-to-br from-primary/25 via-primary/10 to-violet/20 border-primary/70 shadow-glow scale-[1.03]" : "bg-gradient-to-br from-card via-card to-primary/5 border-primary/25 shadow-pop"}`}>
+      {highlighted && <div className="absolute -top-20 -right-20 size-56 rounded-full bg-primary/40 blur-3xl" />}
       {highlighted && <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary text-primary-foreground border-0 text-[10px] uppercase tracking-widest">Most popular</Badge>}
-      <div className="text-[11px] tracking-[0.3em] uppercase text-muted-foreground">{tier}</div>
-      <div className="mt-3 flex items-baseline gap-1.5">
-        <span className={`font-display text-5xl font-light tracking-tight ${highlighted ? "text-primary text-glow" : ""}`}>{price}</span>
+      <div className="relative text-[11px] tracking-[0.3em] uppercase text-primary/80">{tier}</div>
+      <div className="relative mt-3 flex items-baseline gap-1.5">
+        <span className={`font-display text-5xl font-bold tracking-tight ${highlighted ? "text-primary text-glow" : "text-foreground"}`}>{price}</span>
         <span className="text-muted-foreground text-sm">{period}</span>
       </div>
-      <ul className="mt-8 space-y-3">
+      <ul className="relative mt-8 space-y-3">
         {features.map(f => (
           <li key={f} className="flex items-start gap-2.5 text-sm">
             <CheckCircle2 className="size-4 mt-0.5 text-primary shrink-0" />
-            <span className="text-foreground/85">{f}</span>
+            <span className="text-foreground/90">{f}</span>
           </li>
         ))}
       </ul>
-      <Button asChild className={`mt-8 w-full rounded-full h-12 text-xs uppercase tracking-widest font-bold ${highlighted ? "bg-primary text-primary-foreground hover:opacity-90" : "bg-transparent border border-border hover:bg-white/5 text-foreground"}`}>
+      <Button asChild className={`relative mt-8 w-full rounded-full h-12 text-xs uppercase tracking-widest font-bold ${highlighted ? "bg-primary text-primary-foreground hover:opacity-90 shadow-glow" : "bg-primary/15 border border-primary/40 hover:bg-primary/25 text-primary"}`}>
         <Link to="/onboarding">{cta}</Link>
       </Button>
     </div>
