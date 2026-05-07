@@ -117,7 +117,7 @@ function Landing() {
         <div className="absolute inset-0 starfield opacity-30" />
         <div className="relative max-w-6xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-20">
-            <div className="text-[11px] tracking-[0.3em] text-primary uppercase mb-4">¿What do we do?</div>
+            <div className="text-[11px] tracking-[0.3em] text-primary uppercase mb-4">What do we do?</div>
             <h2 className="font-display font-light text-4xl md:text-6xl tracking-tight text-balance">
               Three views.{" "}
               <span className="text-primary text-glow">One unfair advantage.</span>
