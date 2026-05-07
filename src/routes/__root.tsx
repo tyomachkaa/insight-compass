@@ -9,7 +9,6 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
-import { SmoothScroll } from "@/components/SmoothScroll";
 
 function NotFoundComponent() {
   return (
@@ -73,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "FlyHigh — Marketing Intelligence for Local Business" },
+      { title: "Fly High | Marketing Intelligence" },
       { name: "description", content: "See what your competitors are doing right and what to post tonight. Playful marketing intelligence for restaurants, gyms and local businesses." },
-      { name: "author", content: "FlyHigh" },
-      { property: "og:title", content: "FlyHigh — Marketing Intelligence" },
-      { property: "og:description", content: "Competitor intel, trend discovery and personal performance — in one playful platform." },
+      { name: "author", content: "Lumora" },
+      { property: "og:title", content: "Fly High | Marketing Intelligence" },
+      { property: "og:description", content: "See what your competitors are doing right and what to post tonight. Playful marketing intelligence for restaurants, gyms and local businesses." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@FlyHigh" },
+      { name: "twitter:site", content: "@Lumora" },
+      { name: "twitter:title", content: "Fly High | Marketing Intelligence" },
+      { name: "twitter:description", content: "See what your competitors are doing right and what to post tonight. Playful marketing intelligence for restaurants, gyms and local businesses." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f8021625-3fba-42ca-9fa3-7adf06c8b0d0/id-preview-ed84eaba--57b7cb89-ce64-4131-8e1a-d425257fbc71.lovable.app-1778162147920.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f8021625-3fba-42ca-9fa3-7adf06c8b0d0/id-preview-ed84eaba--57b7cb89-ce64-4131-8e1a-d425257fbc71.lovable.app-1778162147920.png" },
     ],
     links: [
       {
@@ -114,7 +117,6 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SmoothScroll />
       <Outlet />
     </QueryClientProvider>
   );
