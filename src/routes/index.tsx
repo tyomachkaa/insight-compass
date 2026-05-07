@@ -84,7 +84,7 @@ function Landing() {
       </section>
 
       {/* STICKY HEADER — sits flush at hero bottom, docks to top on scroll */}
-      <header className="sticky top-0 z-40 -mt-[88px] px-6 py-3 bg-gradient-to-b from-background/0 via-background/60 to-background/85 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 -mt-[64px] px-6 py-3 bg-gradient-to-b from-background/0 via-background/60 to-background/90 backdrop-blur-md">
         <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
           <Link to="/" className="text-foreground">
             <Logo markClassName="size-8" />
