@@ -22,7 +22,7 @@ export function AppShell() {
           <div className="size-9 rounded-2xl bg-gradient-violet shadow-pop grid place-items-center">
             <Sparkles className="size-5 text-primary-foreground" />
           </div>
-          <span className="font-display text-xl font-bold">Lumora</span>
+          <span className="font-display text-xl font-bold">FlyHigh</span>
         </Link>
 
         <nav className="mt-6 space-y-1">

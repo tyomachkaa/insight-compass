@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
   component: Landing,
   head: () => ({
     meta: [
-      { title: "Lumora — Marketing intelligence for local business" },
+      { title: "FlyHigh — Marketing intelligence for local business" },
       { name: "description", content: "Spy on competitors, ride trends, ship better posts. Built for local cafés, gyms and studios." },
     ],
   }),
@@ -69,7 +69,7 @@ function Landing() {
             className="text-center"
           >
             <h1 className="font-display font-light tracking-tight text-glow text-[clamp(4rem,16vw,12rem)] leading-none bg-gradient-to-r from-lime via-sky to-violet bg-clip-text text-transparent">
-              Lumora
+              FlyHigh
             </h1>
             <p className="mt-8 text-sm md:text-base tracking-[0.3em] uppercase text-muted-foreground">
               Marketing Intelligence · Lviv → Worldwide
@@ -81,7 +81,7 @@ function Landing() {
         <div className="absolute bottom-6 inset-x-0 z-20 px-6">
           <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
             <Link to="/" className="flex items-center gap-2 text-foreground">
-              <span className="font-display text-2xl font-light text-primary text-glow">Lumora</span>
+              <span className="font-display text-2xl font-light text-primary text-glow">FlyHigh</span>
             </Link>
 
             <div className="rounded-full bg-gradient-pill border border-border/60 backdrop-blur-xl shadow-pop px-2 py-1.5 flex items-center gap-1">
@@ -128,7 +128,7 @@ function Landing() {
           <div className="grid md:grid-cols-3 gap-5">
             <OrbitCard icon={<Eye className="size-6" />} title="Competitor Radar" body="Track up to 10 rivals across IG, FB, TikTok and Maps. Cadence, hashtags, top posts, sentiment — side by side." />
             <OrbitCard icon={<TrendingUp className="size-6" />} title="Trend Tracker" body="Audios, hashtags, formats and seasonal hooks bubbling up locally — before they peak." />
-            <OrbitCard icon={<BarChart3 className="size-6" />} title="My Performance" body="Connect your accounts. Lumora correlates what you post with how it performs." />
+            <OrbitCard icon={<BarChart3 className="size-6" />} title="My Performance" body="Connect your accounts. FlyHigh correlates what you post with how it performs." />
           </div>
         </div>
       </section>
@@ -185,7 +185,7 @@ function Landing() {
 
       <footer className="border-t border-border/40 py-8">
         <div className="max-w-6xl mx-auto px-6 flex flex-wrap items-center justify-between gap-4 text-xs uppercase tracking-widest text-muted-foreground">
-          <span>© 2026 Lumora — Prototype</span>
+          <span>© 2026 FlyHigh — Prototype</span>
           <span>Apify · n8n · Claude</span>
         </div>
       </footer>

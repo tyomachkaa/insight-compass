@@ -72,14 +72,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lumora — Marketing Intelligence for Local Business" },
+      { title: "FlyHigh — Marketing Intelligence for Local Business" },
       { name: "description", content: "See what your competitors are doing right and what to post tonight. Playful marketing intelligence for restaurants, gyms and local businesses." },
-      { name: "author", content: "Lumora" },
-      { property: "og:title", content: "Lumora — Marketing Intelligence" },
+      { name: "author", content: "FlyHigh" },
+      { property: "og:title", content: "FlyHigh — Marketing Intelligence" },
       { property: "og:description", content: "Competitor intel, trend discovery and personal performance — in one playful platform." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lumora" },
+      { name: "twitter:site", content: "@FlyHigh" },
     ],
     links: [
       {
