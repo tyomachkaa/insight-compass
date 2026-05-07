@@ -38,7 +38,7 @@ function Trends() {
       {/* Audios */}
       <section className="rounded-3xl bg-card/70 backdrop-blur-sm border border-border/60 p-6 shadow-pop">
         <div className="flex items-center gap-3 mb-5">
-          <div className="size-10 rounded-2xl bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40 grid place-items-center text-primary-foreground shadow-pop">
+          <div className="size-10 rounded-2xl bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40 grid place-items-center  text-primary shadow-pop">
             <Music className="size-5" />
           </div>
           <div>
@@ -49,7 +49,7 @@ function Trends() {
         <div className="grid md:grid-cols-2 gap-3">
           {audios.map(a => (
             <div key={a.title} className="rounded-2xl border border-border/60 p-4 flex items-center gap-3 hover:shadow-pop transition">
-              <button className="size-12 rounded-xl bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40 grid place-items-center text-white shadow-pop">
+              <button className="size-12 rounded-xl bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40 grid place-items-center text-foreground shadow-pop">
                 <Play className="size-5 fill-white" />
               </button>
               <div className="flex-1 min-w-0">
@@ -91,7 +91,7 @@ function Trends() {
       {/* Seasonal */}
       <section>
         <div className="flex items-center gap-3 mb-5">
-          <div className="size-10 rounded-2xl bg-gradient-to-br from-primary/30 via-violet/25 to-primary/30 border border-primary/40 grid place-items-center text-white shadow-pop">
+          <div className="size-10 rounded-2xl bg-gradient-to-br from-primary/30 via-violet/25 to-primary/30 border border-primary/40 grid place-items-center text-foreground shadow-pop">
             <Calendar className="size-5" />
           </div>
           <div>
@@ -101,11 +101,11 @@ function Trends() {
         </div>
         <div className="grid md:grid-cols-3 gap-4">
           {seasonal.map(s => (
-            <div key={s.title} className={`rounded-3xl p-6 text-white shadow-pop ${s.grad}`}>
-              <Badge variant="outline" className="rounded-full bg-white/20 border-white/30 text-white mb-3">{s.date}</Badge>
+            <div key={s.title} className={`rounded-3xl p-6 text-foreground shadow-pop ${s.grad}`}>
+              <Badge variant="outline" className="rounded-full bg-primary/20 border-primary/40 text-foreground mb-3">{s.date}</Badge>
               <h3 className="font-display text-xl font-bold">{s.title}</h3>
-              <p className="mt-2 text-sm text-white/85">{s.desc}</p>
-              <Button variant="ghost" size="sm" className="mt-4 rounded-full px-0 text-white hover:bg-white/10">
+              <p className="mt-2 text-sm text-foreground/80">{s.desc}</p>
+              <Button variant="ghost" size="sm" className="mt-4 rounded-full px-0 text-foreground hover:bg-primary/10">
                 Draft a post <ArrowRight className="size-3.5 ml-1" />
               </Button>
             </div>

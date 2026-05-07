@@ -30,17 +30,17 @@ function Dashboard() {
       {/* Top Insight banner */}
       <motion.div
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40 p-8 text-primary-foreground shadow-glow"
+        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40 p-8 text-foreground shadow-glow"
       >
-        <div className="absolute -top-20 -right-20 size-72 rounded-full bg-white/20 blur-3xl" />
+        <div className="absolute -top-20 -right-20 size-72 rounded-full bg-primary/20 blur-3xl" />
         <div className="relative flex flex-wrap items-center gap-6">
-          <div className="size-14 rounded-2xl bg-white/20 backdrop-blur grid place-items-center shrink-0">
+          <div className="size-14 rounded-2xl bg-primary/20 backdrop-blur grid place-items-center shrink-0">
             <Sparkles className="size-7" />
           </div>
           <div className="flex-1 min-w-[260px]">
-            <Badge variant="outline" className="rounded-full bg-white/20 border-white/30 text-white mb-2">⚡ Top insight today</Badge>
+            <Badge variant="outline" className="rounded-full bg-primary/20 border-primary/40 text-foreground mb-2">⚡ Top insight today</Badge>
             <h3 className="font-display text-2xl font-bold">Café Svit posts daily latte-art Reels and gets 4× your reach.</h3>
-            <p className="mt-1 text-white/85">Try a 15–25s slow-mo Reel this week. We've drafted 3 hooks for you.</p>
+            <p className="mt-1 text-foreground/80">Try a 15–25s slow-mo Reel this week. We've drafted 3 hooks for you.</p>
           </div>
           <Button size="lg" className="rounded-full bg-background text-foreground hover:bg-background/90">
             See examples
@@ -95,12 +95,12 @@ function Dashboard() {
             <h3 className="font-display text-xl font-semibold">Competitor spotlight</h3>
           </div>
           <div className="space-y-3">
-            <div className="rounded-2xl bg-gradient-to-br from-violet/30 via-primary/20 to-primary/30 border border-primary/40 p-4 text-white shadow-pop">
+            <div className="rounded-2xl bg-gradient-to-br from-violet/30 via-primary/20 to-primary/30 border border-primary/40 p-4 text-foreground shadow-pop">
               <div className="flex items-center gap-3">
-                <div className="size-10 rounded-xl bg-white/20 grid place-items-center text-2xl">☕</div>
+                <div className="size-10 rounded-xl bg-primary/20 grid place-items-center text-2xl">☕</div>
                 <div className="flex-1 min-w-0">
                   <div className="font-semibold truncate">@latte.art.lv</div>
-                  <div className="text-xs text-white/80">went viral · 48k views</div>
+                  <div className="text-xs text-foreground/75">went viral · 48k views</div>
                 </div>
               </div>
               <p className="mt-3 text-sm">"Pour-over morning routine" Reel — 12× their normal reach.</p>
@@ -173,9 +173,9 @@ function PostCard({ kind, caption, reach, likes, comments, lift }: any) {
   return (
     <div className="rounded-2xl border border-border/60 overflow-hidden">
       <div className={`aspect-video ${grad} grid place-items-center relative`}>
-        {kind === "Reel" && <Play className="size-12 text-white/90" />}
+        {kind === "Reel" && <Play className="size-12 text-primary" />}
         {kind === "Carousel" && <ImageIcon className="size-12 text-foreground/70" />}
-        {kind === "Story" && <Sparkles className="size-12 text-white/90" />}
+        {kind === "Story" && <Sparkles className="size-12 text-primary" />}
         <Badge className="absolute top-3 left-3 rounded-full bg-background/80 backdrop-blur text-foreground border-0">{kind}</Badge>
         <Badge className="absolute top-3 right-3 rounded-full bg-success text-success-foreground border-0">{lift}</Badge>
       </div>
