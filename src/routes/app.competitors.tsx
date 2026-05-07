@@ -35,7 +35,7 @@ function Competitors() {
 
       <div className="grid gap-4">
         {competitors.map(c => (
-          <div key={c.handle} className="rounded-3xl bg-card border border-border/60 p-5 shadow-soft hover:shadow-pop transition-all">
+          <div key={c.handle} className="rounded-3xl bg-card/70 backdrop-blur-sm border border-border/60 p-5 shadow-pop hover:shadow-pop transition-all">
             <div className="grid lg:grid-cols-[auto_1fr_auto] gap-5 items-center">
               <div className="flex items-center gap-4 min-w-[220px]">
                 <div className={`size-14 rounded-2xl grid place-items-center text-3xl ${c.grad} shadow-pop`}>{c.emoji}</div>
@@ -61,7 +61,7 @@ function Competitors() {
       </div>
 
       {/* Detail view sample */}
-      <div className="rounded-3xl bg-card border border-border/60 p-6 shadow-soft">
+      <div className="rounded-3xl bg-card/70 backdrop-blur-sm border border-border/60 p-6 shadow-pop">
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-3">
             <div className="size-12 rounded-2xl bg-gradient-violet grid place-items-center text-2xl shadow-pop">🎨</div>
@@ -81,7 +81,7 @@ function Competitors() {
                 <BarChart data={formatMix}>
                   <XAxis dataKey="f" axisLine={false} tickLine={false} tick={{ fontSize: 12 }} />
                   <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid var(--border)", background: "var(--card)" }} />
-                  <Bar dataKey="v" fill="oklch(0.55 0.24 295)" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="v" fill="oklch(0.82 0.15 220)" radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

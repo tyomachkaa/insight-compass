@@ -57,7 +57,7 @@ function Column({ title, tone, items }: { title: string; tone: "works" | "fails"
         {items.map((it, i) => (
           <div
             key={i}
-            className={`rounded-3xl p-5 border-2 shadow-soft hover:shadow-pop transition ${isWorks ? "border-success/30 bg-success/5" : "border-destructive/30 bg-destructive/5"}`}
+            className={`rounded-3xl p-5 border-2 shadow-pop hover:shadow-pop transition ${isWorks ? "border-success/30 bg-success/5" : "border-destructive/30 bg-destructive/5"}`}
           >
             <div className="flex items-start gap-3">
               <div className={`size-9 rounded-xl grid place-items-center shrink-0 ${isWorks ? "bg-success text-success-foreground" : "bg-destructive text-destructive-foreground"}`}>
@@ -67,7 +67,7 @@ function Column({ title, tone, items }: { title: string; tone: "works" | "fails"
                 <h3 className="font-display text-lg font-semibold leading-snug">{it.title}</h3>
                 <p className="mt-1.5 text-sm text-muted-foreground">{it.body}</p>
 
-                <div className="mt-4 rounded-2xl bg-card border border-border/60 p-3 flex items-start gap-2">
+                <div className="mt-4 rounded-2xl bg-card/70 backdrop-blur-sm border border-border/60 p-3 flex items-start gap-2">
                   <Sparkles className="size-4 mt-0.5 text-primary shrink-0" />
                   <div className="text-sm">
                     <span className="font-semibold">Do this:</span> {it.action}
