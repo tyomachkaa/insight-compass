@@ -196,12 +196,12 @@ function Landing() {
         <div className="grid md:grid-cols-3 gap-6">
           <PriceCard tier="Trial" price="Free" period="for 7 days" features={["3 competitors", "All 4 platforms", "Daily updates", "Insights feed"]} cta="Start trial" />
           <PriceCard
-            tier="Starter" price="€39" period="/ month"
+            tier="Starter" price="€10" period="/ month"
             features={["5 competitors", "Connect own accounts", "Performance tracking", "Weekly AI report"]}
             cta="Choose Starter"
             highlighted
           />
-          <PriceCard tier="Pro" price="€89" period="/ month" features={["10 competitors", "Trend Tracker + audios", "Side-by-side compare", "PDF exports"]} cta="Go Pro" />
+          <PriceCard tier="Pro" price="€30" period="/ month" features={["10 competitors", "Trend Tracker + audios", "Side-by-side compare", "PDF exports"]} cta="Go Pro" />
         </div>
         <p className="mt-6 text-center text-sm text-muted-foreground">UA market pricing adjusted ~35% lower at checkout.</p>
       </section>
