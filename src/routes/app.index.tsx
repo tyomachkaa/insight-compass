@@ -30,7 +30,7 @@ function Dashboard() {
       {/* Top Insight banner */}
       <motion.div
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40 p-8 text-foreground shadow-glow"
+        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/40 via-primary/20 to-violet/50 border border-primary/60 p-8 text-foreground shadow-glow"
       >
         <div className="absolute -top-20 -right-20 size-72 rounded-full bg-primary/20 blur-3xl" />
         <div className="relative flex flex-wrap items-center gap-6">
