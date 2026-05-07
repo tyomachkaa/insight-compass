@@ -3,5 +3,5 @@ import { AppShell } from "@/components/app/AppShell";
 
 export const Route = createFileRoute("/app")({
   component: AppShell,
-  head: () => ({ meta: [{ title: "Lumora · Dashboard" }] }),
+  head: () => ({ meta: [{ title: "FlyHigh · Dashboard" }] }),
 });
