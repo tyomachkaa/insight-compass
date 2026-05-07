@@ -28,8 +28,7 @@ function Dashboard() {
       </div>
 
       {/* Top Insight banner */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+      <div
         className="relative overflow-hidden rounded-3xl bg-primary/15 border border-primary/50 p-8 text-foreground shadow-glow"
       >
         <div className="absolute -top-24 -right-24 size-80 rounded-full bg-primary/40 blur-3xl" />
@@ -47,7 +46,7 @@ function Dashboard() {
             See examples
           </Button>
         </div>
-      </motion.div>
+      </div>
 
       {/* Pulse + Market */}
       <div className="grid lg:grid-cols-3 gap-5">
