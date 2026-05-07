@@ -244,9 +244,10 @@ function Step({ n, icon, title, body }: { n: string; icon: React.ReactNode; titl
 
 function PriceCard({ tier, price, period, features, cta, highlighted }: { tier: string; price: string; period: string; features: string[]; cta: string; highlighted?: boolean }) {
   return (
-    <div className={`relative rounded-3xl p-8 border overflow-hidden ${highlighted ? "bg-gradient-to-br from-primary/25 via-primary/10 to-violet/20 border-primary/70 shadow-glow scale-[1.03]" : "bg-gradient-to-br from-card via-card to-primary/5 border-primary/25 shadow-pop"}`}>
-      {highlighted && <div className="absolute -top-20 -right-20 size-56 rounded-full bg-primary/40 blur-3xl" />}
-      {highlighted && <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary text-primary-foreground border-0 text-[10px] uppercase tracking-widest">Most popular</Badge>}
+    <div className={`relative rounded-3xl border ${highlighted ? "bg-gradient-to-br from-primary/25 via-primary/10 to-violet/20 border-primary/70 shadow-glow md:scale-[1.03]" : "bg-gradient-to-br from-card via-card to-primary/5 border-primary/25 shadow-pop"}`}>
+      {highlighted && <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 rounded-full bg-primary text-primary-foreground border-0 text-[10px] uppercase tracking-widest px-3 py-1 whitespace-nowrap">Most popular</Badge>}
+      <div className="relative rounded-3xl p-8 overflow-hidden">
+      {highlighted && <div className="absolute -top-20 -right-20 size-56 rounded-full bg-primary/40 blur-3xl pointer-events-none" />}
       <div className="relative text-[11px] tracking-[0.3em] uppercase text-primary/80">{tier}</div>
       <div className="relative mt-3 flex items-baseline gap-1.5">
         <span className={`font-display text-5xl font-bold tracking-tight ${highlighted ? "text-primary text-glow" : "text-foreground"}`}>{price}</span>
@@ -263,6 +264,7 @@ function PriceCard({ tier, price, period, features, cta, highlighted }: { tier: 
       <Button asChild className={`relative mt-8 w-full rounded-full h-12 text-xs uppercase tracking-widest font-bold ${highlighted ? "bg-primary text-primary-foreground hover:opacity-90 shadow-glow" : "bg-primary/15 border border-primary/40 hover:bg-primary/25 text-primary"}`}>
         <Link to="/onboarding">{cta}</Link>
       </Button>
+      </div>
     </div>
   );
 }
