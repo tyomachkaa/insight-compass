@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Sparkles, TrendingUp, Eye, ChevronLeft, ChevronRight, ArrowRight,
   Instagram, Facebook, MapPin, CheckCircle2, BarChart3, Target, Rocket, UserCircle2
@@ -28,12 +28,51 @@ const slides = [
 
 function Landing() {
   const [slide, setSlide] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   const next = () => setSlide((s) => (s + 1) % slides.length);
   const prev = () => setSlide((s) => (s - 1 + slides.length) % slides.length);
   const current = slides[slide];
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
+      {/* STICKY HEADER — sits at hero bottom, attaches to top on scroll */}
+      <header
+        className={
+          "fixed inset-x-0 z-30 px-6 transition-all duration-500 " +
+          (scrolled
+            ? "top-0 py-3 bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-pop"
+            : "top-[calc(100vh-5.5rem)] py-0 bg-transparent border-b border-transparent")
+        }
+      >
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+          <Link to="/" className="text-foreground">
+            <Logo markClassName="size-8" />
+          </Link>
+
+          <div className="rounded-full bg-gradient-pill border border-border/60 backdrop-blur-xl shadow-pop px-2 py-1.5 flex items-center gap-1">
+            <NavPill href="#features" label="Features" active />
+            <NavPill href="#how" label="How it works" />
+            <NavPill href="#pricing" label="Pricing" />
+            <NavPill href="#contact" label="Contact" />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button asChild size="sm" variant="ghost" className="rounded-full h-10 w-10 p-0 border border-primary/30 hover:bg-primary/10 hover:border-primary/60" title="Open app">
+              <Link to="/app"><UserCircle2 className="size-5 text-primary" /></Link>
+            </Button>
+            <Button asChild size="sm" className="rounded-full h-10 px-5 bg-primary text-primary-foreground hover:opacity-90 shadow-glow text-xs uppercase tracking-widest font-semibold">
+              <Link to="/onboarding">Start trial</Link>
+            </Button>
+          </div>
+        </div>
+      </header>
+
       {/* HERO — cosmic */}
       <section className="relative min-h-screen overflow-hidden">
         <div className="absolute inset-0 starfield" />
@@ -81,30 +120,6 @@ function Landing() {
           </motion.div>
         </div>
 
-        {/* Bottom nav — Brainit-style floating bar */}
-        <div className="absolute bottom-6 inset-x-0 z-20 px-6">
-          <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
-            <Link to="/" className="text-foreground">
-              <Logo markClassName="size-8" />
-            </Link>
-
-            <div className="rounded-full bg-gradient-pill border border-border/60 backdrop-blur-xl shadow-pop px-2 py-1.5 flex items-center gap-1">
-              <NavPill href="#features" label="Features" active />
-              <NavPill href="#how" label="How it works" />
-              <NavPill href="#pricing" label="Pricing" />
-              <NavPill href="#contact" label="Contact" />
-            </div>
-
-            <div className="flex items-center gap-2">
-              <Button asChild size="sm" variant="ghost" className="rounded-full h-10 w-10 p-0 border border-primary/30 hover:bg-primary/10 hover:border-primary/60" title="Open app">
-                <Link to="/app"><UserCircle2 className="size-5 text-primary" /></Link>
-              </Button>
-              <Button asChild size="sm" className="rounded-full h-10 px-5 bg-primary text-primary-foreground hover:opacity-90 shadow-glow text-xs uppercase tracking-widest font-semibold">
-                <Link to="/onboarding">Start trial</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* Platforms */}
