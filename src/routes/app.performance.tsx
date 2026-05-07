@@ -31,7 +31,7 @@ function Performance() {
           <h1 className="font-display text-4xl font-bold tracking-tight">My Performance</h1>
           <p className="text-muted-foreground mt-1">Connected accounts and how FlyHigh insights moved your numbers.</p>
         </div>
-        <Button className="rounded-full bg-gradient-violet shadow-pop"><Plug className="size-4 mr-1.5" /> Connect another</Button>
+        <Button className="rounded-full bg-primary text-primary-foreground shadow-glow hover:opacity-90"><Plug className="size-4 mr-1.5" /> Connect another</Button>
       </div>
 
       {/* Connected accounts */}
@@ -42,14 +42,14 @@ function Performance() {
       </div>
 
       {/* Before/After lift */}
-      <div className="rounded-3xl bg-gradient-violet p-8 text-primary-foreground shadow-glow relative overflow-hidden">
-        <div className="absolute -top-20 -right-20 size-72 rounded-full bg-white/20 blur-3xl" />
+      <div className="rounded-3xl bg-gradient-to-br from-primary/40 via-primary/20 to-violet/50 border border-primary/60 p-8 text-primary-foreground shadow-glow relative overflow-hidden">
+        <div className="absolute -top-20 -right-20 size-72 rounded-full bg-primary/20 blur-3xl" />
         <div className="relative grid md:grid-cols-[auto_1fr_auto] items-center gap-6">
           <Sparkles className="size-10" />
           <div>
-            <Badge variant="outline" className="rounded-full bg-white/20 border-white/30 text-white mb-2">Insight lift</Badge>
+            <Badge variant="outline" className="rounded-full bg-primary/20 border-primary/40 text-foreground mb-2">Insight lift</Badge>
             <h3 className="font-display text-2xl font-bold">You applied 3 insights this week.</h3>
-            <p className="text-white/85 mt-1">Reach +18% · Engagement rate +0.8pt · Followers +212. Keep it going.</p>
+            <p className="text-foreground/80 mt-1">Reach +18% · Engagement rate +0.8pt · Followers +212. Keep it going.</p>
           </div>
         </div>
       </div>
@@ -106,7 +106,7 @@ function Performance() {
 function Account({ icon, name, platform, connected }: any) {
   return (
     <div className="rounded-3xl bg-card/70 backdrop-blur-sm border border-border/60 p-5 shadow-pop flex items-center gap-3">
-      <div className="size-11 rounded-2xl bg-gradient-violet grid place-items-center text-primary-foreground shadow-pop">{icon}</div>
+      <div className="size-11 rounded-2xl bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40 grid place-items-center  text-primary shadow-pop">{icon}</div>
       <div className="flex-1 min-w-0">
         <div className="font-semibold truncate">{name}</div>
         <div className="text-xs text-muted-foreground">{platform}</div>
