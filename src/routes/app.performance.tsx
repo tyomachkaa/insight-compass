@@ -55,7 +55,7 @@ function Performance() {
       </div>
 
       {/* Reach chart */}
-      <div className="rounded-3xl bg-card border border-border/60 p-6 shadow-soft">
+      <div className="rounded-3xl bg-card/70 backdrop-blur-sm border border-border/60 p-6 shadow-pop">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="font-display text-xl font-semibold">Reach over time</h3>
@@ -74,14 +74,14 @@ function Performance() {
               <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 11 }} />
               <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11 }} />
               <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid var(--border)", background: "var(--card)" }} />
-              <Line type="monotone" dataKey="reach" stroke="oklch(0.55 0.24 295)" strokeWidth={3} dot={{ r: 3 }} />
+              <Line type="monotone" dataKey="reach" stroke="oklch(0.82 0.15 220)" strokeWidth={3} dot={{ r: 3 }} />
             </LineChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       {/* Correlation */}
-      <div className="rounded-3xl bg-card border border-border/60 p-6 shadow-soft">
+      <div className="rounded-3xl bg-card/70 backdrop-blur-sm border border-border/60 p-6 shadow-pop">
         <div className="mb-4">
           <h3 className="font-display text-xl font-semibold">Likes ↔ Comments correlation</h3>
           <p className="text-sm text-muted-foreground">Bubble size = saves. BTS Reels cluster top-right.</p>
@@ -94,7 +94,7 @@ function Performance() {
               <YAxis type="number" dataKey="comments" name="Comments" axisLine={false} tickLine={false} tick={{ fontSize: 11 }} />
               <ZAxis type="number" dataKey="z" range={[80, 400]} />
               <Tooltip cursor={{ strokeDasharray: "3 3" }} contentStyle={{ borderRadius: 12, border: "1px solid var(--border)", background: "var(--card)" }} />
-              <Scatter data={correlation} fill="oklch(0.55 0.24 295)" />
+              <Scatter data={correlation} fill="oklch(0.82 0.15 220)" />
             </ScatterChart>
           </ResponsiveContainer>
         </div>
@@ -105,7 +105,7 @@ function Performance() {
 
 function Account({ icon, name, platform, connected }: any) {
   return (
-    <div className="rounded-3xl bg-card border border-border/60 p-5 shadow-soft flex items-center gap-3">
+    <div className="rounded-3xl bg-card/70 backdrop-blur-sm border border-border/60 p-5 shadow-pop flex items-center gap-3">
       <div className="size-11 rounded-2xl bg-gradient-violet grid place-items-center text-primary-foreground shadow-pop">{icon}</div>
       <div className="flex-1 min-w-0">
         <div className="font-semibold truncate">{name}</div>

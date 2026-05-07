@@ -36,7 +36,7 @@ function Trends() {
       </div>
 
       {/* Audios */}
-      <section className="rounded-3xl bg-card border border-border/60 p-6 shadow-soft">
+      <section className="rounded-3xl bg-card/70 backdrop-blur-sm border border-border/60 p-6 shadow-pop">
         <div className="flex items-center gap-3 mb-5">
           <div className="size-10 rounded-2xl bg-gradient-violet grid place-items-center text-primary-foreground shadow-pop">
             <Music className="size-5" />
@@ -63,7 +63,7 @@ function Trends() {
       </section>
 
       {/* Hashtags */}
-      <section className="rounded-3xl bg-card border border-border/60 p-6 shadow-soft">
+      <section className="rounded-3xl bg-card/70 backdrop-blur-sm border border-border/60 p-6 shadow-pop">
         <div className="flex items-center gap-3 mb-5">
           <div className="size-10 rounded-2xl bg-gradient-lime grid place-items-center shadow-pop">
             <Hash className="size-5" />

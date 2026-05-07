@@ -57,7 +57,7 @@ function Dashboard() {
 
       {/* Two columns */}
       <div className="grid lg:grid-cols-3 gap-5">
-        <div className="lg:col-span-2 rounded-3xl bg-card border border-border/60 p-6 shadow-soft">
+        <div className="lg:col-span-2 rounded-3xl bg-card/70 backdrop-blur-sm border border-border/60 p-6 shadow-pop">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="font-display text-xl font-semibold">You vs your niche</h3>
@@ -73,23 +73,23 @@ function Dashboard() {
               <AreaChart data={reachData}>
                 <defs>
                   <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="oklch(0.55 0.24 295)" stopOpacity={0.4} />
-                    <stop offset="100%" stopColor="oklch(0.55 0.24 295)" stopOpacity={0} />
+                    <stop offset="0%" stopColor="oklch(0.82 0.15 220)" stopOpacity={0.4} />
+                    <stop offset="100%" stopColor="oklch(0.82 0.15 220)" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="g2" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="oklch(0.72 0.18 145)" stopOpacity={0.3} />
-                    <stop offset="100%" stopColor="oklch(0.72 0.18 145)" stopOpacity={0} />
+                    <stop offset="0%" stopColor="oklch(0.7 0.22 280)" stopOpacity={0.3} />
+                    <stop offset="100%" stopColor="oklch(0.7 0.22 280)" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid var(--border)", background: "var(--card)" }} />
-                <Area type="monotone" dataKey="you" stroke="oklch(0.55 0.24 295)" strokeWidth={3} fill="url(#g1)" />
-                <Area type="monotone" dataKey="niche" stroke="oklch(0.72 0.18 145)" strokeWidth={2} fill="url(#g2)" strokeDasharray="4 4" />
+                <Area type="monotone" dataKey="you" stroke="oklch(0.82 0.15 220)" strokeWidth={3} fill="url(#g1)" />
+                <Area type="monotone" dataKey="niche" stroke="oklch(0.7 0.22 280)" strokeWidth={2} fill="url(#g2)" strokeDasharray="4 4" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        <div className="rounded-3xl bg-card border border-border/60 p-6 shadow-soft">
+        <div className="rounded-3xl bg-card/70 backdrop-blur-sm border border-border/60 p-6 shadow-pop">
           <div className="flex items-center gap-2 mb-4">
             <Flame className="size-5 text-coral" />
             <h3 className="font-display text-xl font-semibold">Competitor spotlight</h3>
@@ -123,7 +123,7 @@ function Dashboard() {
       </div>
 
       {/* Recent wins */}
-      <div className="rounded-3xl bg-card border border-border/60 p-6 shadow-soft">
+      <div className="rounded-3xl bg-card/70 backdrop-blur-sm border border-border/60 p-6 shadow-pop">
         <div className="flex items-center justify-between mb-5">
           <div>
             <h3 className="font-display text-xl font-semibold">Your recent wins 🎉</h3>
@@ -149,7 +149,7 @@ function Dashboard() {
 
 function PulseCard({ label, value, delta, up, data }: any) {
   return (
-    <motion.div whileHover={{ y: -3 }} className="rounded-3xl bg-card border border-border/60 p-6 shadow-soft">
+    <motion.div whileHover={{ y: -3 }} className="rounded-3xl bg-card/70 backdrop-blur-sm border border-border/60 p-6 shadow-pop">
       <div className="flex items-center justify-between mb-2">
         <span className="text-sm text-muted-foreground">{label}</span>
         <Badge variant="outline" className={`rounded-full ${up ? "text-success border-success/40" : "text-destructive border-destructive/40"}`}>
@@ -160,7 +160,7 @@ function PulseCard({ label, value, delta, up, data }: any) {
       <div className="h-12 mt-3 -mx-2">
         <ResponsiveContainer>
           <LineChart data={data}>
-            <Line type="monotone" dataKey="you" stroke="oklch(0.55 0.24 295)" strokeWidth={2.5} dot={false} />
+            <Line type="monotone" dataKey="you" stroke="oklch(0.82 0.15 220)" strokeWidth={2.5} dot={false} />
           </LineChart>
         </ResponsiveContainer>
       </div>
@@ -194,7 +194,7 @@ function PostCard({ kind, caption, reach, likes, comments, lift }: any) {
 function InsightTeaser({ tone, title, body }: { tone: "works" | "fails"; title: string; body: string }) {
   const isWorks = tone === "works";
   return (
-    <div className={`rounded-3xl p-6 border-2 shadow-soft ${isWorks ? "border-success/40 bg-success/5" : "border-destructive/40 bg-destructive/5"}`}>
+    <div className={`rounded-3xl p-6 border-2 shadow-pop ${isWorks ? "border-success/40 bg-success/5" : "border-destructive/40 bg-destructive/5"}`}>
       <div className="flex items-center gap-2 mb-3">
         <div className={`size-9 rounded-xl grid place-items-center ${isWorks ? "bg-success text-success-foreground" : "bg-destructive text-destructive-foreground"}`}>
           <Lightbulb className="size-5" />
