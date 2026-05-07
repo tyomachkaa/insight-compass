@@ -68,7 +68,7 @@ function Landing() {
             transition={{ duration: 1.2, ease: "easeOut" }}
             className="text-center"
           >
-            <h1 className="font-display font-light tracking-tight text-glow text-[clamp(4rem,16vw,12rem)] leading-none bg-gradient-to-r from-lime via-sky to-violet bg-clip-text text-transparent">
+            <h1 className="font-display font-light tracking-tight text-glow text-[clamp(4rem,16vw,12rem)] leading-[1.15] pb-4 bg-gradient-to-r from-lime via-sky to-violet bg-clip-text text-transparent">
               FlyHigh
             </h1>
             <p className="mt-8 text-sm md:text-base tracking-[0.3em] uppercase text-muted-foreground">
