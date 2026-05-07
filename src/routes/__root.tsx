@@ -82,8 +82,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@Lumora" },
       { name: "twitter:title", content: "Fly High | Marketing Intelligence" },
       { name: "twitter:description", content: "See what your competitors are doing right and what to post tonight. Playful marketing intelligence for restaurants, gyms and local businesses." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f8021625-3fba-42ca-9fa3-7adf06c8b0d0/id-preview-ed84eaba--57b7cb89-ce64-4131-8e1a-d425257fbc71.lovable.app-1778162147920.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f8021625-3fba-42ca-9fa3-7adf06c8b0d0/id-preview-ed84eaba--57b7cb89-ce64-4131-8e1a-d425257fbc71.lovable.app-1778162147920.png" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/J9EKSLIs6aZdQcDruUmiLUpCs0t1/social-images/social-1778165235727-flyhigh-og-1200x630.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/J9EKSLIs6aZdQcDruUmiLUpCs0t1/social-images/social-1778165235727-flyhigh-og-1200x630.webp" },
     ],
     links: [
       {
