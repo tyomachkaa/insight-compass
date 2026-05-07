@@ -120,30 +120,6 @@ function Landing() {
           </motion.div>
         </div>
 
-        {/* Bottom nav — Brainit-style floating bar */}
-        <div className="absolute bottom-6 inset-x-0 z-20 px-6">
-          <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
-            <Link to="/" className="text-foreground">
-              <Logo markClassName="size-8" />
-            </Link>
-
-            <div className="rounded-full bg-gradient-pill border border-border/60 backdrop-blur-xl shadow-pop px-2 py-1.5 flex items-center gap-1">
-              <NavPill href="#features" label="Features" active />
-              <NavPill href="#how" label="How it works" />
-              <NavPill href="#pricing" label="Pricing" />
-              <NavPill href="#contact" label="Contact" />
-            </div>
-
-            <div className="flex items-center gap-2">
-              <Button asChild size="sm" variant="ghost" className="rounded-full h-10 w-10 p-0 border border-primary/30 hover:bg-primary/10 hover:border-primary/60" title="Open app">
-                <Link to="/app"><UserCircle2 className="size-5 text-primary" /></Link>
-              </Button>
-              <Button asChild size="sm" className="rounded-full h-10 px-5 bg-primary text-primary-foreground hover:opacity-90 shadow-glow text-xs uppercase tracking-widest font-semibold">
-                <Link to="/onboarding">Start trial</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* Platforms */}
