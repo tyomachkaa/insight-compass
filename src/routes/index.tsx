@@ -72,8 +72,11 @@ function Landing() {
             <h1 className="font-display font-light tracking-tight text-glow text-[clamp(4rem,16vw,12rem)] leading-[1.15] pb-4 bg-gradient-to-r from-lime via-sky to-violet bg-clip-text text-transparent">
               FlyHigh
             </h1>
-            <p className="mt-8 text-sm md:text-base tracking-[0.3em] uppercase text-muted-foreground">
-              Marketing Intelligence · Lviv → Worldwide
+            <div className="mt-8 flex justify-center">
+              <LogoMark className="size-14 opacity-80" />
+            </div>
+            <p className="mt-4 text-sm md:text-base tracking-[0.3em] uppercase text-muted-foreground">
+              Marketing Intelligence
             </p>
           </motion.div>
         </div>
@@ -81,8 +84,8 @@ function Landing() {
         {/* Bottom nav — Brainit-style floating bar */}
         <div className="absolute bottom-6 inset-x-0 z-20 px-6">
           <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
-            <Link to="/" className="flex items-center gap-2 text-foreground">
-              <span className="font-display text-2xl font-light text-primary text-glow">FlyHigh</span>
+            <Link to="/" className="text-foreground">
+              <Logo markClassName="size-8" />
             </Link>
 
             <div className="rounded-full bg-gradient-pill border border-border/60 backdrop-blur-xl shadow-pop px-2 py-1.5 flex items-center gap-1">
@@ -92,9 +95,11 @@ function Landing() {
               <NavPill href="#contact" label="Contact" />
             </div>
 
-            <div className="flex items-center gap-3">
-              <Link to="/app" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-primary transition">Sign in</Link>
-              <Button asChild size="sm" className="rounded-full bg-primary text-primary-foreground hover:opacity-90 shadow-glow text-xs uppercase tracking-widest font-semibold">
+            <div className="flex items-center gap-2">
+              <Button asChild size="sm" variant="ghost" className="rounded-full h-10 w-10 p-0 border border-primary/30 hover:bg-primary/10 hover:border-primary/60" title="Open app">
+                <Link to="/app"><UserCircle2 className="size-5 text-primary" /></Link>
+              </Button>
+              <Button asChild size="sm" className="rounded-full h-10 px-5 bg-primary text-primary-foreground hover:opacity-90 shadow-glow text-xs uppercase tracking-widest font-semibold">
                 <Link to="/onboarding">Start trial</Link>
               </Button>
             </div>
