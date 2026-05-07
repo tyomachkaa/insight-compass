@@ -13,6 +13,9 @@ import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppTrendsRouteImport } from './routes/app.trends'
+import { Route as AppPerformanceRouteImport } from './routes/app.performance'
+import { Route as AppInsightsRouteImport } from './routes/app.insights'
 import { Route as AppCompetitorsRouteImport } from './routes/app.competitors'
 
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -35,6 +38,21 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppTrendsRoute = AppTrendsRouteImport.update({
+  id: '/trends',
+  path: '/trends',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPerformanceRoute = AppPerformanceRouteImport.update({
+  id: '/performance',
+  path: '/performance',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppInsightsRoute = AppInsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppCompetitorsRoute = AppCompetitorsRouteImport.update({
   id: '/competitors',
   path: '/competitors',
@@ -46,12 +64,18 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/onboarding': typeof OnboardingRoute
   '/app/competitors': typeof AppCompetitorsRoute
+  '/app/insights': typeof AppInsightsRoute
+  '/app/performance': typeof AppPerformanceRoute
+  '/app/trends': typeof AppTrendsRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/onboarding': typeof OnboardingRoute
   '/app/competitors': typeof AppCompetitorsRoute
+  '/app/insights': typeof AppInsightsRoute
+  '/app/performance': typeof AppPerformanceRoute
+  '/app/trends': typeof AppTrendsRoute
   '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
@@ -60,14 +84,41 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/onboarding': typeof OnboardingRoute
   '/app/competitors': typeof AppCompetitorsRoute
+  '/app/insights': typeof AppInsightsRoute
+  '/app/performance': typeof AppPerformanceRoute
+  '/app/trends': typeof AppTrendsRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app' | '/onboarding' | '/app/competitors' | '/app/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/onboarding'
+    | '/app/competitors'
+    | '/app/insights'
+    | '/app/performance'
+    | '/app/trends'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/onboarding' | '/app/competitors' | '/app'
-  id: '__root__' | '/' | '/app' | '/onboarding' | '/app/competitors' | '/app/'
+  to:
+    | '/'
+    | '/onboarding'
+    | '/app/competitors'
+    | '/app/insights'
+    | '/app/performance'
+    | '/app/trends'
+    | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/onboarding'
+    | '/app/competitors'
+    | '/app/insights'
+    | '/app/performance'
+    | '/app/trends'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +157,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/trends': {
+      id: '/app/trends'
+      path: '/trends'
+      fullPath: '/app/trends'
+      preLoaderRoute: typeof AppTrendsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/performance': {
+      id: '/app/performance'
+      path: '/performance'
+      fullPath: '/app/performance'
+      preLoaderRoute: typeof AppPerformanceRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/insights': {
+      id: '/app/insights'
+      path: '/insights'
+      fullPath: '/app/insights'
+      preLoaderRoute: typeof AppInsightsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/competitors': {
       id: '/app/competitors'
       path: '/competitors'
@@ -118,11 +190,17 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppCompetitorsRoute: typeof AppCompetitorsRoute
+  AppInsightsRoute: typeof AppInsightsRoute
+  AppPerformanceRoute: typeof AppPerformanceRoute
+  AppTrendsRoute: typeof AppTrendsRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppCompetitorsRoute: AppCompetitorsRoute,
+  AppInsightsRoute: AppInsightsRoute,
+  AppPerformanceRoute: AppPerformanceRoute,
+  AppTrendsRoute: AppTrendsRoute,
   AppIndexRoute: AppIndexRoute,
 }
 
