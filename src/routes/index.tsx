@@ -3,10 +3,11 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import {
   Sparkles, TrendingUp, Eye, ChevronLeft, ChevronRight, ArrowRight,
-  Instagram, Facebook, MapPin, CheckCircle2, BarChart3, Target, Rocket, Zap
+  Instagram, Facebook, MapPin, CheckCircle2, BarChart3, Target, Rocket, UserCircle2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Logo, LogoMark } from "@/components/brand/Logo";
 
 export const Route = createFileRoute("/")({
   component: Landing,
@@ -19,7 +20,7 @@ export const Route = createFileRoute("/")({
 });
 
 const slides = [
-  { eyebrow: "WE ARE LUMORA", title: "Your strategic marketing advantage." },
+  { eyebrow: "WE ARE FLYHIGH", title: "Your strategic marketing advantage." },
   { eyebrow: "COMPETITOR RADAR", title: "See what works. Skip what doesn't." },
   { eyebrow: "TREND TRACKER", title: "Catch the wave before it peaks." },
   { eyebrow: "PERFORMANCE", title: "Prove the lift with your own data." },
