@@ -46,7 +46,7 @@ function Column({ title, tone, items }: { title: string; tone: "works" | "fails"
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3">
-        <div className={`size-10 rounded-2xl grid place-items-center text-white shadow-pop ${isWorks ? "bg-gradient-lime" : "bg-gradient-coral"}`}>
+        <div className={`size-10 rounded-2xl grid place-items-center text-white shadow-pop ${isWorks ? "bg-gradient-to-br from-primary/25 via-violet/20 to-primary/30 border border-primary/40" : "bg-gradient-to-br from-violet/30 via-primary/20 to-primary/30 border border-primary/40"}`}>
           {isWorks ? <Check className="size-5" /> : <X className="size-5" />}
         </div>
         <h2 className="font-display text-2xl font-bold">{title}</h2>
@@ -78,7 +78,7 @@ function Column({ title, tone, items }: { title: string; tone: "works" | "fails"
                   <span className="text-xs text-muted-foreground">{it.evidence}</span>
                   <div className="flex gap-1">
                     <Button variant="ghost" size="sm" className="rounded-full h-8"><Bookmark className="size-3.5 mr-1" /> Save</Button>
-                    <Button size="sm" className="rounded-full h-8 bg-gradient-violet shadow-pop">Apply <ArrowRight className="size-3.5 ml-1" /></Button>
+                    <Button size="sm" className="rounded-full h-8 bg-primary text-primary-foreground shadow-glow hover:opacity-90">Apply <ArrowRight className="size-3.5 ml-1" /></Button>
                   </div>
                 </div>
               </div>

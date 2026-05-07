@@ -7,12 +7,12 @@ import { BarChart, Bar, ResponsiveContainer, XAxis, Tooltip } from "recharts";
 export const Route = createFileRoute("/app/competitors")({ component: Competitors });
 
 const competitors = [
-  { handle: "@latte.art.lv", name: "Latte Art Lab", emoji: "🎨", followers: "15.1k", er: 7.2, posts7d: 9, reach: 48000, trend: "up", reviews: 4.8, grad: "bg-gradient-violet" },
-  { handle: "@cafe_svit", name: "Café Svit", emoji: "☕", followers: "12.4k", er: 5.8, posts7d: 7, reach: 32000, trend: "up", reviews: 4.6, grad: "bg-gradient-coral" },
-  { handle: "@morningbrew_lv", name: "Morning Brew", emoji: "🌅", followers: "6.2k", er: 6.4, posts7d: 11, reach: 22000, trend: "up", reviews: 4.7, grad: "bg-gradient-sunset" },
-  { handle: "@lviv_coffee", name: "Lviv Coffee Roasters", emoji: "🫘", followers: "8.9k", er: 4.1, posts7d: 4, reach: 18000, trend: "down", reviews: 4.5, grad: "bg-gradient-lime" },
-  { handle: "@bean_to_cup", name: "Bean to Cup", emoji: "🍪", followers: "4.8k", er: 3.9, posts7d: 3, reach: 9500, trend: "down", reviews: 4.3, grad: "bg-gradient-violet" },
-  { handle: "@kavarna_centr", name: "Kavarna Centr", emoji: "📍", followers: "9.3k", er: 4.7, posts7d: 6, reach: 21000, trend: "up", reviews: 4.4, grad: "bg-gradient-coral" },
+  { handle: "@latte.art.lv", name: "Latte Art Lab", emoji: "🎨", followers: "15.1k", er: 7.2, posts7d: 9, reach: 48000, trend: "up", reviews: 4.8, grad: "bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40" },
+  { handle: "@cafe_svit", name: "Café Svit", emoji: "☕", followers: "12.4k", er: 5.8, posts7d: 7, reach: 32000, trend: "up", reviews: 4.6, grad: "bg-gradient-to-br from-violet/30 via-primary/20 to-primary/30 border border-primary/40" },
+  { handle: "@morningbrew_lv", name: "Morning Brew", emoji: "🌅", followers: "6.2k", er: 6.4, posts7d: 11, reach: 22000, trend: "up", reviews: 4.7, grad: "bg-gradient-to-br from-primary/30 via-violet/25 to-primary/30 border border-primary/40" },
+  { handle: "@lviv_coffee", name: "Lviv Coffee Roasters", emoji: "🫘", followers: "8.9k", er: 4.1, posts7d: 4, reach: 18000, trend: "down", reviews: 4.5, grad: "bg-gradient-to-br from-primary/25 via-violet/20 to-primary/30 border border-primary/40" },
+  { handle: "@bean_to_cup", name: "Bean to Cup", emoji: "🍪", followers: "4.8k", er: 3.9, posts7d: 3, reach: 9500, trend: "down", reviews: 4.3, grad: "bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40" },
+  { handle: "@kavarna_centr", name: "Kavarna Centr", emoji: "📍", followers: "9.3k", er: 4.7, posts7d: 6, reach: 21000, trend: "up", reviews: 4.4, grad: "bg-gradient-to-br from-violet/30 via-primary/20 to-primary/30 border border-primary/40" },
 ];
 
 const formatMix = [
@@ -29,7 +29,7 @@ function Competitors() {
         </div>
         <div className="flex gap-2">
           <Button variant="outline" className="rounded-full">Compare two</Button>
-          <Button className="rounded-full bg-gradient-violet shadow-pop">+ Add competitor</Button>
+          <Button className="rounded-full bg-primary text-primary-foreground shadow-glow hover:opacity-90">+ Add competitor</Button>
         </div>
       </div>
 
@@ -64,7 +64,7 @@ function Competitors() {
       <div className="rounded-3xl bg-card/70 backdrop-blur-sm border border-border/60 p-6 shadow-pop">
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-3">
-            <div className="size-12 rounded-2xl bg-gradient-violet grid place-items-center text-2xl shadow-pop">🎨</div>
+            <div className="size-12 rounded-2xl bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40 grid place-items-center text-2xl shadow-pop">🎨</div>
             <div>
               <div className="font-display text-xl font-bold">Latte Art Lab</div>
               <div className="text-xs text-muted-foreground">@latte.art.lv · deep dive · last 30 days</div>
@@ -103,7 +103,7 @@ function Competitors() {
                 { c: "How we pick beans · Ethiopia", r: "18k", l: "1.1k", m: "76" },
               ].map((p, i) => (
                 <div key={i} className="flex items-center gap-3 rounded-2xl border border-border/60 p-3">
-                  <div className="size-10 rounded-xl bg-gradient-violet shrink-0" />
+                  <div className="size-10 rounded-xl bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40 shrink-0" />
                   <div className="flex-1 text-sm font-medium truncate">{p.c}</div>
                   <div className="flex items-center gap-3 text-xs text-muted-foreground shrink-0">
                     <span className="flex items-center gap-1"><Eye className="size-3" /> {p.r}</span>

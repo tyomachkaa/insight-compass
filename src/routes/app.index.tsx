@@ -22,7 +22,7 @@ function Dashboard() {
           <h1 className="font-display text-4xl font-bold tracking-tight">Доброго ранку, Olena 👋</h1>
           <p className="text-muted-foreground mt-1">3 new insights · 1 competitor went viral · 2 trends to ride this week.</p>
         </div>
-        <Button asChild className="rounded-full bg-gradient-violet shadow-pop">
+        <Button asChild className="rounded-full bg-primary text-primary-foreground shadow-glow hover:opacity-90">
           <Link to="/app/insights">View today's insights <ArrowRight className="ml-2 size-4" /></Link>
         </Button>
       </div>
@@ -30,7 +30,7 @@ function Dashboard() {
       {/* Top Insight banner */}
       <motion.div
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-violet p-8 text-primary-foreground shadow-glow"
+        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40 p-8 text-primary-foreground shadow-glow"
       >
         <div className="absolute -top-20 -right-20 size-72 rounded-full bg-white/20 blur-3xl" />
         <div className="relative flex flex-wrap items-center gap-6">
@@ -95,7 +95,7 @@ function Dashboard() {
             <h3 className="font-display text-xl font-semibold">Competitor spotlight</h3>
           </div>
           <div className="space-y-3">
-            <div className="rounded-2xl bg-gradient-coral p-4 text-white shadow-pop">
+            <div className="rounded-2xl bg-gradient-to-br from-violet/30 via-primary/20 to-primary/30 border border-primary/40 p-4 text-white shadow-pop">
               <div className="flex items-center gap-3">
                 <div className="size-10 rounded-xl bg-white/20 grid place-items-center text-2xl">☕</div>
                 <div className="flex-1 min-w-0">
@@ -169,7 +169,7 @@ function PulseCard({ label, value, delta, up, data }: any) {
 }
 
 function PostCard({ kind, caption, reach, likes, comments, lift }: any) {
-  const grad = kind === "Reel" ? "bg-gradient-violet" : kind === "Carousel" ? "bg-gradient-lime" : "bg-gradient-coral";
+  const grad = kind === "Reel" ? "bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40" : kind === "Carousel" ? "bg-gradient-to-br from-primary/25 via-violet/20 to-primary/30 border border-primary/40" : "bg-gradient-to-br from-violet/30 via-primary/20 to-primary/30 border border-primary/40";
   return (
     <div className="rounded-2xl border border-border/60 overflow-hidden">
       <div className={`aspect-video ${grad} grid place-items-center relative`}>

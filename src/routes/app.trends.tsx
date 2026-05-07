@@ -22,9 +22,9 @@ const hashtags = [
 ];
 
 const seasonal = [
-  { date: "In 12 days", title: "Halloween-themed lattes", desc: "Competitors typically post 5–7 days before. Start drafting a pumpkin spice Reel.", grad: "bg-gradient-coral" },
-  { date: "In 23 days", title: "All Saints' Day weekend", desc: "Family-coffee posts spike. Brunch carousels overperform.", grad: "bg-gradient-violet" },
-  { date: "In 41 days", title: "St. Nicholas / Christmas market", desc: "Festive cup designs get 3× saves — design yours by Nov 28.", grad: "bg-gradient-sunset" },
+  { date: "In 12 days", title: "Halloween-themed lattes", desc: "Competitors typically post 5–7 days before. Start drafting a pumpkin spice Reel.", grad: "bg-gradient-to-br from-violet/30 via-primary/20 to-primary/30 border border-primary/40" },
+  { date: "In 23 days", title: "All Saints' Day weekend", desc: "Family-coffee posts spike. Brunch carousels overperform.", grad: "bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40" },
+  { date: "In 41 days", title: "St. Nicholas / Christmas market", desc: "Festive cup designs get 3× saves — design yours by Nov 28.", grad: "bg-gradient-to-br from-primary/30 via-violet/25 to-primary/30 border border-primary/40" },
 ];
 
 function Trends() {
@@ -38,7 +38,7 @@ function Trends() {
       {/* Audios */}
       <section className="rounded-3xl bg-card/70 backdrop-blur-sm border border-border/60 p-6 shadow-pop">
         <div className="flex items-center gap-3 mb-5">
-          <div className="size-10 rounded-2xl bg-gradient-violet grid place-items-center text-primary-foreground shadow-pop">
+          <div className="size-10 rounded-2xl bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40 grid place-items-center text-primary-foreground shadow-pop">
             <Music className="size-5" />
           </div>
           <div>
@@ -49,7 +49,7 @@ function Trends() {
         <div className="grid md:grid-cols-2 gap-3">
           {audios.map(a => (
             <div key={a.title} className="rounded-2xl border border-border/60 p-4 flex items-center gap-3 hover:shadow-pop transition">
-              <button className="size-12 rounded-xl bg-gradient-violet grid place-items-center text-white shadow-pop">
+              <button className="size-12 rounded-xl bg-gradient-to-br from-primary/30 via-primary/15 to-violet/30 border border-primary/40 grid place-items-center text-white shadow-pop">
                 <Play className="size-5 fill-white" />
               </button>
               <div className="flex-1 min-w-0">
@@ -65,7 +65,7 @@ function Trends() {
       {/* Hashtags */}
       <section className="rounded-3xl bg-card/70 backdrop-blur-sm border border-border/60 p-6 shadow-pop">
         <div className="flex items-center gap-3 mb-5">
-          <div className="size-10 rounded-2xl bg-gradient-lime grid place-items-center shadow-pop">
+          <div className="size-10 rounded-2xl bg-gradient-to-br from-primary/25 via-violet/20 to-primary/30 border border-primary/40 grid place-items-center shadow-pop">
             <Hash className="size-5" />
           </div>
           <div>
@@ -91,7 +91,7 @@ function Trends() {
       {/* Seasonal */}
       <section>
         <div className="flex items-center gap-3 mb-5">
-          <div className="size-10 rounded-2xl bg-gradient-sunset grid place-items-center text-white shadow-pop">
+          <div className="size-10 rounded-2xl bg-gradient-to-br from-primary/30 via-violet/25 to-primary/30 border border-primary/40 grid place-items-center text-white shadow-pop">
             <Calendar className="size-5" />
           </div>
           <div>
