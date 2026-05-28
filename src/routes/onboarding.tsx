@@ -3,12 +3,14 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles, ArrowRight, ArrowLeft, Coffee, Dumbbell, Scissors, Wrench,
-  Camera, Pizza, Check, Plus, X, Instagram, Facebook, MapPin, Loader2
+  Camera, Pizza, Check, Plus, X, Instagram, Loader2, AlertCircle, Mail
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { useSubmitOnboarding } from "@/lib/queries/onboarding";
+import type { CompetitorAccountInput, OnboardingFormInput, OwnAccountInput } from "@/lib/queries/onboarding";
 
 export const Route = createFileRoute("/onboarding")({
   component: Onboarding,
@@ -33,8 +35,21 @@ const suggestedCompetitors = [
   { handle: "@kavarna_centr", name: "Kavarna Centr", followers: "9.3k", engagement: "4.7%", emoji: "📍" },
 ];
 
+function handleToInstagramUrl(h: string): string {
+  const u = h.replace(/^@/, "").trim();
+  return `https://www.instagram.com/${u}`;
+}
+
+function splitLocation(loc: string): { city: string; country: string } {
+  const parts = loc.split(",").map(s => s.trim()).filter(Boolean);
+  if (parts.length >= 2) return { city: parts[0], country: parts.slice(1).join(", ") };
+  return { city: parts[0] ?? "", country: parts[0] ?? "" };
+}
+
 function Onboarding() {
   const [step, setStep] = useState(1);
+  const [email, setEmail] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [niche, setNiche] = useState("cafe");
   const [businessName, setBusinessName] = useState("");
   const [location, setLocation] = useState("");
@@ -42,15 +57,20 @@ function Onboarding() {
   const [picked, setPicked] = useState<Set<string>>(new Set(suggestedCompetitors.map(c => c.handle)));
   const [customHandle, setCustomHandle] = useState("");
   const [customs, setCustoms] = useState<{ handle: string; name: string; emoji: string }[]>([]);
-  const [scanning, setScanning] = useState(false);
-  const [scanProgress, setScanProgress] = useState(0);
+  const [acceptedTerms, setAcceptedTerms] = useState(true);
+  const [marketingConsent, setMarketingConsent] = useState(false);
   const navigate = useNavigate();
+  const submit = useSubmitOnboarding();
 
   const totalCompetitors = picked.size + customs.length;
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const step1Valid = emailValid && displayName.trim().length > 0 && businessName.trim().length > 0 && handle.trim().length > 0;
+  const step3Valid = totalCompetitors > 0 && acceptedTerms;
 
   const next = () => {
+    if (step === 1 && !step1Valid) return;
     if (step < 3) setStep(step + 1);
-    else startScan();
+    else void submitOnboarding();
   };
   const back = () => step > 1 && setStep(step - 1);
 
@@ -67,17 +87,77 @@ function Onboarding() {
     setCustomHandle("");
   };
 
-  const startScan = () => {
-    setScanning(true);
-    const interval = setInterval(() => {
-      setScanProgress(p => {
-        if (p >= 100) { clearInterval(interval); setTimeout(() => navigate({ to: "/app" }), 600); return 100; }
-        return p + 2;
-      });
-    }, 80);
+  const submitOnboarding = async () => {
+    const nicheLabel = niches.find(n => n.id === niche)?.label ?? niche;
+    const { city, country } = splitLocation(location);
+
+    const own: OwnAccountInput[] = [
+      {
+        platform: "instagram",
+        profile_url: handleToInstagramUrl(handle),
+        username: handle.replace(/^@/, ""),
+        display_name: businessName,
+        account_label: "main_brand_account",
+        scrape_enabled: true,
+      },
+    ];
+
+    const competitorHandles = [
+      ...Array.from(picked).map(h => ({ handle: h, name: suggestedCompetitors.find(c => c.handle === h)?.name ?? h })),
+      ...customs.map(c => ({ handle: c.handle, name: c.name })),
+    ];
+    const competitors: CompetitorAccountInput[] = competitorHandles.map(c => ({
+      platform: "instagram",
+      profile_url: handleToInstagramUrl(c.handle),
+      username: c.handle.replace(/^@/, ""),
+      display_name: c.name,
+      account_label: "competitor",
+      scrape_enabled: true,
+      competitor_type: "direct",
+    }));
+
+    const payload: OnboardingFormInput = {
+      email,
+      displayName,
+      companyName: businessName,
+      roleInCompany: "owner",
+      projectName: businessName,
+      niche: nicheLabel,
+      country: country || city,
+      marketRegion: country || city,
+      targetAudience: "",
+      productDescription: "",
+      mainGoal: "",
+      businessStage: "growth",
+      websiteUrl: "",
+      interfaceLanguage: "uk",
+      reportLanguage: "uk",
+      contentLanguage: "uk",
+      ownAccounts: own,
+      competitorAccounts: competitors,
+      requestedPlatforms: ["instagram"],
+      analysisDepth: "standard",
+      primaryRoleView: "owner",
+      planId: "starter",
+      billingProvider: "stripe",
+      paymentStatus: "trialing",
+      subscriptionStatus: "trialing",
+      acceptedTerms,
+      acceptedPrivacyPolicy: acceptedTerms,
+      marketingConsent,
+    };
+
+    try {
+      const res = await submit.mutateAsync(payload);
+      if (res.ok && res.workspace_id) {
+        navigate({ to: "/app" });
+      }
+    } catch {
+      // error surfaced via submit.error below
+    }
   };
 
-  if (scanning) return <ScanScreen progress={scanProgress} />;
+  if (submit.isPending) return <ScanScreen progress={null} />;
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
@@ -113,6 +193,20 @@ function Onboarding() {
                 <p className="mt-3 text-muted-foreground text-lg">We'll use this to find the right competitors and trends.</p>
 
                 <div className="mt-10 space-y-6">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">Your name</label>
+                      <Input value={displayName} onChange={e => setDisplayName(e.target.value)} placeholder="e.g. Olena" className="h-12 rounded-xl" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium mb-2 block">Email</label>
+                      <div className="relative">
+                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                        <Input value={email} onChange={e => setEmail(e.target.value)} placeholder="you@company.com" type="email" className="h-12 rounded-xl pl-11" />
+                      </div>
+                    </div>
+                  </div>
+
                   <div>
                     <label className="text-sm font-medium mb-3 block">What kind of business?</label>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -165,7 +259,7 @@ function Onboarding() {
                       <Coffee className="size-8" />
                     </div>
                     <div>
-                      <h3 className="font-display text-2xl font-bold">Specialty Coffee</h3>
+                      <h3 className="font-display text-2xl font-bold">{niches.find(n => n.id === niche)?.label ?? "Specialty Coffee"}</h3>
                       <p className="text-muted-foreground">{location || "Lviv"} · Downtown</p>
                     </div>
                   </div>
@@ -242,6 +336,41 @@ function Onboarding() {
                     <Plus className="size-4 mr-1" /> Add
                   </Button>
                 </div>
+
+                <div className="mt-8 space-y-3">
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={acceptedTerms}
+                      onChange={e => setAcceptedTerms(e.target.checked)}
+                      className="mt-1 size-4 rounded border-border"
+                    />
+                    <span className="text-sm text-muted-foreground">
+                      I accept the <a href="/terms" className="text-primary underline">Terms</a> and <a href="/privacy" className="text-primary underline">Privacy Policy</a>.
+                    </span>
+                  </label>
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={marketingConsent}
+                      onChange={e => setMarketingConsent(e.target.checked)}
+                      className="mt-1 size-4 rounded border-border"
+                    />
+                    <span className="text-sm text-muted-foreground">
+                      Send me occasional product updates. (optional)
+                    </span>
+                  </label>
+                </div>
+
+                {submit.isError && (
+                  <div className="mt-6 rounded-2xl border border-destructive/40 bg-destructive/10 p-4 flex items-start gap-3 text-sm">
+                    <AlertCircle className="size-5 text-destructive shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-destructive">Could not start analysis</div>
+                      <div className="text-muted-foreground mt-1">{(submit.error as Error)?.message}</div>
+                    </div>
+                  </div>
+                )}
               </>
             )}
           </motion.div>
@@ -251,7 +380,11 @@ function Onboarding() {
           <Button variant="ghost" onClick={back} disabled={step === 1} className="rounded-full">
             <ArrowLeft className="size-4 mr-1" /> Back
           </Button>
-          <Button onClick={next} className="rounded-full h-12 px-7 bg-gradient-violet shadow-pop hover:shadow-glow">
+          <Button
+            onClick={next}
+            disabled={(step === 1 && !step1Valid) || (step === 3 && !step3Valid)}
+            className="rounded-full h-12 px-7 bg-gradient-violet shadow-pop hover:shadow-glow"
+          >
             {step === 3 ? "Start scanning" : "Continue"} <ArrowRight className="size-4 ml-1" />
           </Button>
         </div>
@@ -260,16 +393,16 @@ function Onboarding() {
   );
 }
 
-function ScanScreen({ progress }: { progress: number }) {
+function ScanScreen({ progress }: { progress: number | null }) {
   const messages = [
-    "Connecting to Apify actors...",
-    "Scraping Instagram profiles...",
-    "Analyzing 384 posts from 30 days...",
-    "Reading Google Maps reviews...",
-    "Clustering content patterns...",
-    "Asking Claude for next steps...",
+    "Submitting your onboarding…",
+    "Creating your workspace…",
+    "Linking your competitors…",
+    "Queueing the first analysis…",
+    "Spinning up Apify actors…",
+    "Almost there…",
   ];
-  const idx = Math.min(Math.floor(progress / 17), messages.length - 1);
+  const idx = progress != null ? Math.min(Math.floor(progress / 17), messages.length - 1) : 0;
 
   return (
     <div className="min-h-screen bg-background grid place-items-center relative overflow-hidden">
@@ -290,7 +423,7 @@ function ScanScreen({ progress }: { progress: number }) {
         <h2 className="mt-8 font-display text-3xl font-bold">Building your radar...</h2>
         <p className="mt-3 text-muted-foreground">This usually takes about 2 minutes. We'll keep going if you close the tab.</p>
         <div className="mt-8">
-          <Progress value={progress} className="h-2" />
+          {progress != null ? <Progress value={progress} className="h-2" /> : null}
           <div className="mt-4 flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <Loader2 className="size-4 animate-spin" /> {messages[idx]}
           </div>

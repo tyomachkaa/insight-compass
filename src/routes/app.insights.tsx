@@ -1,90 +1,174 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Lightbulb, ArrowRight, Bookmark, Check, X, Sparkles } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Lightbulb, ArrowRight, Check, X, Sparkles, Loader2, Target } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useApplyInsight, useDismissInsight, useInsightsFeed } from "@/lib/queries/insights";
+import { NoWorkspaceState, ProcessingState, ErrorState, EmptyState } from "@/components/app/PageState";
+import type { Database } from "@/lib/database.types";
+
+type InsightRow = Database["app"]["Tables"]["insights_feed"]["Row"];
 
 export const Route = createFileRoute("/app/insights")({ component: Insights });
 
-const works = [
-  { title: "Behind-the-scenes Reels are crushing it", body: "Posts with BTS video format get 3.2× more engagement at your competitors over 84 posts in 30 days.", action: "Film one barista shift and post a 20s Reel by Friday.", evidence: "6 competitors · 84 posts · 95% confidence" },
-  { title: "15–25 second Reels outperform longer ones", body: "Sweet-spot length for cafés in Lviv is 18s. Anything past 35s drops 60% in completion rate.", action: "Cut your next Reel down to ≤25s.", evidence: "TikTok + IG · 142 reels" },
-  { title: "Posts before 11am get 2× saves", body: "Morning content lands harder for your niche. Latte art at 8–10am is peak.", action: "Schedule your morning Reel for 09:30.", evidence: "30-day window · all competitors" },
-  { title: "Hashtag #kavalviv has 4× organic reach", body: "Local-language tag is under-used and over-performing.", action: "Add #kavalviv to your next 5 posts.", evidence: "27 posts using it" },
-];
-
-const fails = [
-  { title: "Long carousels (8+ slides) flop", body: "47% reach drop on long carousels in your niche. Audience scrolls past.", action: "Cap carousels at 5 slides with a strong slide-1 hook.", evidence: "31 posts analyzed" },
-  { title: "Pure promo without storytelling = no saves", body: "Posts that lead with 'sale' or 'discount' have 0.4% save rate vs 3.1% niche avg.", action: "Wrap promos in a story (origin, ritual, result).", evidence: "62 promo posts" },
-  { title: "Stock-style food photos underperform", body: "Plated overhead shots without people get 38% less engagement than candid moments.", action: "Add hands, baristas or guests to the next 3 food shots.", evidence: "94 photos clustered" },
-];
+type Filter = "all" | "not_applied" | "applied" | "dismissed";
 
 function Insights() {
+  const { insights, isLoading, error, refetch, hasWorkspace } = useInsightsFeed();
+  const [filter, setFilter] = useState<Filter>("all");
+
+  const filtered = useMemo(() => {
+    if (filter === "all") return insights.filter((i) => i.apply_status !== "dismissed");
+    return insights.filter((i) => i.apply_status === filter);
+  }, [insights, filter]);
+
+  if (!hasWorkspace) return <NoWorkspaceState />;
+  if (isLoading) return <ProcessingState variant="grid" title="Loading your insights…" />;
+  if (error) return <ErrorState message={(error as Error)?.message} onRetry={refetch} />;
+
   return (
     <div className="space-y-6 max-w-7xl">
       <div className="flex items-end justify-between flex-wrap gap-4">
         <div>
           <h1 className="font-display text-4xl font-bold tracking-tight">Insights Feed</h1>
-          <p className="text-muted-foreground mt-1">What's working, what's not — fresh from your competitor radar.</p>
+          <p className="text-muted-foreground mt-1">Actionable findings from your competitor radar — apply the ones that fit.</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" className="rounded-full">All</Button>
-          <Button variant="outline" className="rounded-full">Saved</Button>
-          <Button variant="outline" className="rounded-full">Done</Button>
+          {(["all", "not_applied", "applied"] as Filter[]).map((f) => (
+            <Button
+              key={f}
+              variant={filter === f ? "default" : "outline"}
+              onClick={() => setFilter(f)}
+              className="rounded-full capitalize"
+            >
+              {f === "not_applied" ? "Not applied" : f}
+            </Button>
+          ))}
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
-        <Column title="What's working" tone="works" items={works} />
-        <Column title="What's failing" tone="fails" items={fails} />
-      </div>
+      {filtered.length === 0 ? (
+        <EmptyState
+          title="No insights here"
+          body={filter === "all" ? "No insights generated yet. They appear after the first analysis finishes." : "Nothing matches this filter."}
+        />
+      ) : (
+        <div className="grid lg:grid-cols-2 gap-5">
+          {filtered.map((insight) => (
+            <InsightCard key={insight.insight_id} insight={insight} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
-function Column({ title, tone, items }: { title: string; tone: "works" | "fails"; items: any[] }) {
-  const isWorks = tone === "works";
+function InsightCard({ insight }: { insight: InsightRow }) {
+  const apply = useApplyInsight();
+  const dismiss = useDismissInsight();
+  const applied = insight.apply_status === "applied";
+
+  const evidenceText = (() => {
+    const ev = insight.evidence_json;
+    if (Array.isArray(ev) && ev.length > 0) {
+      const parts = [`${ev.length} data points`];
+      if (insight.platform) parts.unshift(insight.platform);
+      if (insight.confidence_score != null) parts.push(`${Math.round(insight.confidence_score * 100)}% confidence`);
+      return parts.join(" · ");
+    }
+    const bits: string[] = [];
+    if (insight.platform) bits.push(insight.platform);
+    if (insight.affected_area) bits.push(insight.affected_area);
+    if (insight.confidence_score != null) bits.push(`${Math.round(insight.confidence_score * 100)}% confidence`);
+    return bits.join(" · ");
+  })();
+
+  const priorityTone =
+    insight.priority === "high"
+      ? "border-destructive/40 text-destructive"
+      : insight.priority === "medium"
+        ? "border-warning/40 text-warning"
+        : "border-success/40 text-success";
+
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-3">
-        <div className={`size-10 rounded-2xl grid place-items-center text-foreground shadow-pop ${isWorks ? "bg-gradient-to-br from-primary/25 via-violet/20 to-primary/30 border border-primary/40" : "bg-gradient-to-br from-violet/30 via-primary/20 to-primary/30 border border-primary/40"}`}>
-          {isWorks ? <Check className="size-5" /> : <X className="size-5" />}
+    <div className="rounded-3xl p-5 border-2 border-border/60 bg-card/60 shadow-pop hover:shadow-glow transition">
+      <div className="flex items-start gap-3">
+        <div className="size-9 rounded-xl grid place-items-center shrink-0 bg-primary/15 text-primary border border-primary/30">
+          <Lightbulb className="size-5" />
         </div>
-        <h2 className="font-display text-2xl font-bold">{title}</h2>
-        <Badge variant="outline" className="rounded-full">{items.length} cards</Badge>
-      </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap mb-1">
+            {insight.insight_type && (
+              <Badge variant="outline" className="rounded-full text-[10px] uppercase tracking-wider">
+                {insight.insight_type.replace(/_/g, " ")}
+              </Badge>
+            )}
+            {insight.priority && (
+              <Badge variant="outline" className={`rounded-full text-[10px] uppercase tracking-wider ${priorityTone}`}>
+                {insight.priority}
+              </Badge>
+            )}
+            {applied && (
+              <Badge className="rounded-full bg-success text-success-foreground border-0 text-[10px]">
+                <Check className="size-3 mr-1" /> Applied
+              </Badge>
+            )}
+          </div>
+          <h3 className="font-display text-lg font-semibold leading-snug">{insight.title}</h3>
+          {insight.short_summary && (
+            <p className="mt-1.5 text-sm text-muted-foreground">{insight.short_summary}</p>
+          )}
 
-      <div className="space-y-3">
-        {items.map((it, i) => (
-          <div
-            key={i}
-            className={`rounded-3xl p-5 border-2 shadow-pop hover:shadow-pop transition ${isWorks ? "border-success/30 bg-success/5" : "border-destructive/30 bg-destructive/5"}`}
-          >
-            <div className="flex items-start gap-3">
-              <div className={`size-9 rounded-xl grid place-items-center shrink-0 ${isWorks ? "bg-success text-success-foreground" : "bg-destructive text-destructive-foreground"}`}>
-                <Lightbulb className="size-5" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-display text-lg font-semibold leading-snug">{it.title}</h3>
-                <p className="mt-1.5 text-sm text-muted-foreground">{it.body}</p>
-
-                <div className="mt-4 rounded-2xl bg-card/70 backdrop-blur-sm border border-border/60 p-3 flex items-start gap-2">
-                  <Sparkles className="size-4 mt-0.5 text-primary shrink-0" />
-                  <div className="text-sm">
-                    <span className="font-semibold">Do this:</span> {it.action}
-                  </div>
-                </div>
-
-                <div className="mt-3 flex items-center justify-between gap-2 flex-wrap">
-                  <span className="text-xs text-muted-foreground">{it.evidence}</span>
-                  <div className="flex gap-1">
-                    <Button variant="ghost" size="sm" className="rounded-full h-8"><Bookmark className="size-3.5 mr-1" /> Save</Button>
-                    <Button size="sm" className="rounded-full h-8 bg-primary text-primary-foreground shadow-glow hover:opacity-90">Apply <ArrowRight className="size-3.5 ml-1" /></Button>
-                  </div>
-                </div>
+          {insight.recommended_action && (
+            <div className="mt-4 rounded-2xl bg-card/70 backdrop-blur-sm border border-border/60 p-3 flex items-start gap-2">
+              <Sparkles className="size-4 mt-0.5 text-primary shrink-0" />
+              <div className="text-sm">
+                <span className="font-semibold">Do this:</span> {insight.recommended_action}
               </div>
             </div>
+          )}
+
+          {(insight.expected_effect || insight.recommended_tracking_metric) && (
+            <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
+              <Target className="size-3.5" />
+              {insight.expected_effect ?? `Track ${insight.recommended_tracking_metric}`}
+            </div>
+          )}
+
+          <div className="mt-4 flex items-center justify-between gap-2 flex-wrap">
+            <span className="text-xs text-muted-foreground">{evidenceText}</span>
+            <div className="flex gap-1">
+              {!applied && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="rounded-full h-8"
+                  disabled={dismiss.isPending}
+                  onClick={() => dismiss.mutate({ insight_id: insight.insight_id })}
+                >
+                  <X className="size-3.5 mr-1" /> Dismiss
+                </Button>
+              )}
+              <Button
+                size="sm"
+                className="rounded-full h-8 bg-primary text-primary-foreground shadow-glow hover:opacity-90"
+                disabled={applied || apply.isPending}
+                onClick={() => apply.mutate({ insight_id: insight.insight_id })}
+              >
+                {apply.isPending ? (
+                  <><Loader2 className="size-3.5 mr-1 animate-spin" /> Applying…</>
+                ) : applied ? (
+                  <>Applied <Check className="size-3.5 ml-1" /></>
+                ) : (
+                  <>Apply <ArrowRight className="size-3.5 ml-1" /></>
+                )}
+              </Button>
+            </div>
           </div>
-        ))}
+          {apply.isError && (
+            <p className="mt-2 text-xs text-destructive">{(apply.error as Error)?.message}</p>
+          )}
+        </div>
       </div>
     </div>
   );

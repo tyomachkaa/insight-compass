@@ -3,20 +3,20 @@ import { usePageObject } from "@/lib/queries/page-object";
 import { PageHeader, PageObjectGate } from "@/components/app/PageState";
 import { GenericPageObject } from "@/components/app/GenericPageObject";
 
-export const Route = createFileRoute("/app/trends")({ component: Trends });
+export const Route = createFileRoute("/app/ideas")({ component: IdeaSuggestions });
 
-function Trends() {
-  const result = usePageObject({ pageKey: "trend_tracker" });
+function IdeaSuggestions() {
+  const result = usePageObject({ pageKey: "idea_suggestions" });
   return (
     <div className="space-y-6 max-w-7xl">
       <PageHeader
-        title="Trend Tracker"
-        subtitle="Trending audios, hashtags and seasonal opportunities in your niche."
+        title="Idea Suggestions"
+        subtitle="AI-generated content and campaign ideas tailored to your niche."
       />
       <PageObjectGate
         result={result}
-        emptyTitle="No trends yet"
-        emptyBody="Trend data appears after the first analysis run scans your niche."
+        emptyTitle="No ideas yet"
+        emptyBody="Content ideas are generated from competitor patterns after analysis finishes."
       >
         {(payload) => <GenericPageObject payload={payload} />}
       </PageObjectGate>
