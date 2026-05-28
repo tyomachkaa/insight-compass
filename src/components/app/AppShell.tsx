@@ -1,12 +1,14 @@
-import { Link, Outlet, useLocation } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import {
   LayoutDashboard, Eye, Lightbulb, TrendingUp, BarChart3, Settings, Bell, Search,
-  Crown, Trophy, Sparkles, Swords, Activity, ListChecks,
+  Crown, Trophy, Sparkles, Swords, Activity, ListChecks, Loader2,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Logo } from "@/components/brand/Logo";
+import { useAuth } from "@/lib/auth";
 import { useCurrentWorkspace } from "@/lib/queries/workspace";
 import type { RoleKey } from "@/lib/database.types";
 
@@ -33,10 +35,12 @@ const ROLES: { key: RoleKey; label: string }[] = [
 ];
 
 function RoleSwitcher() {
-  const { roleKey, setRoleKey } = useCurrentWorkspace();
+  const { roleKey, setRoleKey, allowedRoles } = useCurrentWorkspace();
+  const roles = ROLES.filter((r) => allowedRoles.includes(r.key));
+  if (roles.length <= 1) return null;
   return (
     <div className="flex items-center gap-0.5 rounded-full bg-card/80 border border-border/60 p-1">
-      {ROLES.map((r) => (
+      {roles.map((r) => (
         <button
           key={r.key}
           onClick={() => setRoleKey(r.key)}
@@ -55,7 +59,22 @@ function RoleSwitcher() {
 
 export function AppShell() {
   const loc = useLocation();
+  const navigate = useNavigate();
+  const { session, loading } = useAuth();
   const { workspace } = useCurrentWorkspace();
+
+  // Auth gate — redirect to /auth once we know there's no session.
+  useEffect(() => {
+    if (!loading && !session) navigate({ to: "/auth" });
+  }, [loading, session, navigate]);
+
+  if (loading || !session) {
+    return (
+      <div className="min-h-screen bg-background grid place-items-center">
+        <Loader2 className="size-6 text-primary animate-spin" />
+      </div>
+    );
+  }
   const projectName = workspace?.project_name ?? "Your workspace";
   const niche = workspace?.niche ?? "";
   const initial = projectName.charAt(0).toUpperCase() || "W";

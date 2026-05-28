@@ -185,7 +185,12 @@ export type Database = {
           workspace_member_id: string;
           workspace_id: string;
           app_user_id: string;
-          role: string;
+          auth_user_id: string | null;
+          role: string | null;
+          workspace_role: string | null;
+          default_view_mode: string | null;
+          allowed_view_modes: string[] | null;
+          status: string | null;
         };
         Insert: never;
         Update: never;

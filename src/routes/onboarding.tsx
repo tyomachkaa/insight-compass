@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles, ArrowRight, ArrowLeft, Coffee, Dumbbell, Scissors, Wrench,
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { useAuth } from "@/lib/auth";
 import { useSubmitOnboarding } from "@/lib/queries/onboarding";
 import type { CompetitorAccountInput, OnboardingFormInput, OwnAccountInput } from "@/lib/queries/onboarding";
 
@@ -47,8 +48,10 @@ function splitLocation(loc: string): { city: string; country: string } {
 }
 
 function Onboarding() {
+  const { user, session, loading } = useAuth();
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const [email, setEmail] = useState("");
+  const email = user?.email ?? "";
   const [displayName, setDisplayName] = useState("");
   const [niche, setNiche] = useState("cafe");
   const [businessName, setBusinessName] = useState("");
@@ -59,12 +62,15 @@ function Onboarding() {
   const [customs, setCustoms] = useState<{ handle: string; name: string; emoji: string }[]>([]);
   const [acceptedTerms, setAcceptedTerms] = useState(true);
   const [marketingConsent, setMarketingConsent] = useState(false);
-  const navigate = useNavigate();
   const submit = useSubmitOnboarding();
 
+  // Onboarding requires a session so WF_01 receives a real auth_user_id.
+  useEffect(() => {
+    if (!loading && !session) navigate({ to: "/auth" });
+  }, [loading, session, navigate]);
+
   const totalCompetitors = picked.size + customs.length;
-  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const step1Valid = emailValid && displayName.trim().length > 0 && businessName.trim().length > 0 && handle.trim().length > 0;
+  const step1Valid = displayName.trim().length > 0 && businessName.trim().length > 0 && handle.trim().length > 0;
   const step3Valid = totalCompetitors > 0 && acceptedTerms;
 
   const next = () => {
@@ -118,6 +124,7 @@ function Onboarding() {
 
     const payload: OnboardingFormInput = {
       email,
+      authUserId: user?.id ?? null,
       displayName,
       companyName: businessName,
       roleInCompany: "owner",
@@ -156,6 +163,14 @@ function Onboarding() {
       // error surfaced via submit.error below
     }
   };
+
+  if (loading || !session) {
+    return (
+      <div className="min-h-screen bg-background grid place-items-center">
+        <Loader2 className="size-6 text-primary animate-spin" />
+      </div>
+    );
+  }
 
   if (submit.isPending) return <ScanScreen progress={null} />;
 
@@ -202,8 +217,9 @@ function Onboarding() {
                       <label className="text-sm font-medium mb-2 block">Email</label>
                       <div className="relative">
                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-                        <Input value={email} onChange={e => setEmail(e.target.value)} placeholder="you@company.com" type="email" className="h-12 rounded-xl pl-11" />
+                        <Input value={email} readOnly disabled className="h-12 rounded-xl pl-11 opacity-80" />
                       </div>
+                      <p className="text-xs text-muted-foreground mt-1.5">Signed in as {email}</p>
                     </div>
                   </div>
 

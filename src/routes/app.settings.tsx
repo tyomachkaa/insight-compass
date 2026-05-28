@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { RefreshCw, Trash2, Plus, Loader2, Instagram, Building2, Globe, CreditCard, Bell } from "lucide-react";
+import { RefreshCw, Trash2, Plus, Loader2, Instagram, Building2, Globe, CreditCard, Bell, LogOut, UserCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useAuth } from "@/lib/auth";
 import { useCurrentWorkspace } from "@/lib/queries/workspace";
 import {
   useAddAccount, useManualRefresh, useRemoveAccount, useSocialAccounts, useUpdateNotifications,
@@ -18,6 +19,7 @@ export const Route = createFileRoute("/app/settings")({ component: SettingsPage 
 const PLATFORMS: Platform[] = ["instagram", "tiktok", "youtube", "threads", "twitter", "facebook"];
 
 function SettingsPage() {
+  const { user, signOut } = useAuth();
   const { workspace, workspaceId, roleKey } = useCurrentWorkspace();
   const { own, competitors, isLoading } = useSocialAccounts();
   const refresh = useManualRefresh();
@@ -132,6 +134,19 @@ function SettingsPage() {
           <Toggle label="New competitor moves" checked={notif.notify_about_competitor_moves} onChange={() => toggleNotif("notify_about_competitor_moves")} />
         </div>
         {updateNotifications.isError && <p className="mt-2 text-xs text-destructive">{(updateNotifications.error as Error)?.message}</p>}
+      </Section>
+
+      {/* Account */}
+      <Section icon={<UserCircle className="size-5" />} title="Account">
+        <div className="flex items-center justify-between gap-4 flex-wrap">
+          <div>
+            <div className="text-xs text-muted-foreground mb-1">Signed in as</div>
+            <div className="font-medium">{user?.email ?? "—"}</div>
+          </div>
+          <Button variant="outline" className="rounded-full" onClick={() => signOut()}>
+            <LogOut className="size-4 mr-1.5" /> Sign out
+          </Button>
+        </div>
       </Section>
     </div>
   );
